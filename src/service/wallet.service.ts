@@ -21,4 +21,8 @@ export class WalletService {
   async findAll() {
     return this.walletRepository.find();
   }
+
+  async findOneById(address: string): Promise<Wallet> {
+    return await this.walletRepository.findOneOrFail(address);
+  }
 }
