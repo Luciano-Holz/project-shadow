@@ -17,4 +17,8 @@ export class WalletService {
     const newWallet = this.walletRepository.create(CreateWalletDto);
     return this.walletRepository.save(newWallet);
   }
+
+  async findAll() {
+    return this.walletRepository.find();
+  }
 }
