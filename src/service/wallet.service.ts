@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { NotFoundError } from 'src/errors/notfoundError';
 import { Wallet } from 'src/model/wallet.entity';
 import { CreateWalletDto } from 'src/validation/wallet/createWallet.dto';
 import { UpdateWalletDto } from 'src/validation/wallet/updateWallet.dto';
@@ -38,6 +39,7 @@ export class WalletService {
 
   async remove(address: string): Promise<Wallet> {
     const wallet = await this.findOneById(address);
+    if (!wallet) throw new NotFoundError();
     return await this.walletRepository.remove(wallet);
   }
 }
