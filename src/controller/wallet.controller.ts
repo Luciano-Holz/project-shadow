@@ -7,7 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { JoiPipe } from 'nestjs-joi';
 import { Wallet } from 'src/model/wallet.entity';
 import { WalletService } from 'src/service/wallet.service';
@@ -18,6 +18,8 @@ import { UpdateWalletDto } from 'src/validation/wallet/updateWallet.dto';
 export class WalletController {
   constructor(private readonly walletService: WalletService) {}
 
+  @ApiCreatedResponse()
+  @ApiBadRequestResponse()
   @Post()
   async create(@Body(JoiPipe) createWalletDto: CreateWalletDto) {
     return this.walletService.create(createWalletDto);
