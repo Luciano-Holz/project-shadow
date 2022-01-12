@@ -17,4 +17,10 @@ export class WalletController {
   async findAll() {
     return this.walletService.findAll();
   }
+
+  @ApiOkResponse({ type: Wallet })
+  @Get(':address')
+  findOne(@Param() address: string) {
+    return this.walletService.findOneById(address);
+  }
 }
