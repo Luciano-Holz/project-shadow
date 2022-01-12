@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { BadRequestError } from 'src/errors/BadRequestError';
 import { NotFoundError } from 'src/errors/notfoundError';
 import { Wallet } from 'src/model/wallet.entity';
 import { CreateWalletDto } from 'src/validation/wallet/createWallet.dto';
 import { UpdateWalletDto } from 'src/validation/wallet/updateWallet.dto';
 import { Repository } from 'typeorm';
+import { validateCpf } from '../helpers/validateCpf';
 
 export type WalletType = object;
 
@@ -15,8 +17,11 @@ export class WalletService {
     private walletRepository: Repository<Wallet>,
   ) {}
 
-  async create(CreateWalletDto: CreateWalletDto): Promise<Wallet> {
-    const newWallet = this.walletRepository.create(CreateWalletDto);
+  async create(createWalletDto: CreateWalletDto): Promise<Wallet> {
+    const walletCpf = validateCpf(createWalletDto.cpf);
+    console.log(walletCpf);
+    if (!walletCpf) throw new BadRequestError();
+    const newWallet = this.walletRepository.create(createWalletDto);
     return this.walletRepository.save(newWallet);
   }
 
