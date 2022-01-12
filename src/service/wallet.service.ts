@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Wallet } from 'src/model/wallet.entity';
 import { CreateWalletDto } from 'src/validation/wallet/createWallet.dto';
+import { UpdateWalletDto } from 'src/validation/wallet/updateWallet.dto';
 import { Repository } from 'typeorm';
 
 export type WalletType = object;
@@ -24,6 +25,15 @@ export class WalletService {
 
   async findOneById(address: string): Promise<Wallet> {
     return await this.walletRepository.findOneOrFail(address);
+  }
+
+  async update(
+    address: string,
+    updateteWalletDto: UpdateWalletDto,
+  ): Promise<Wallet> {
+    const wallet = await this.findOneById(address);
+    this.walletRepository.merge(wallet, updateteWalletDto);
+    return await this.walletRepository.save(wallet);
   }
 
   async remove(address: string): Promise<Wallet> {
