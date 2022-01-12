@@ -7,7 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { JoiPipe } from 'nestjs-joi';
 import { Wallet } from 'src/model/wallet.entity';
 import { WalletService } from 'src/service/wallet.service';
@@ -44,8 +44,9 @@ export class WalletController {
   }
 
   @ApiOkResponse({ type: Wallet })
+  @ApiNotFoundResponse()
   @Delete(':address')
-  remove() {
-    return ' ';
+  remove(@Param('address') address: string) {
+    return this.walletService.remove(address);
   }
 }
