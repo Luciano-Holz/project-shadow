@@ -23,4 +23,10 @@ export class WalletController {
   findOne(@Param() address: string) {
     return this.walletService.findOneById(address);
   }
+
+  @ApiOkResponse({ type: Wallet })
+  @Delete(':address')
+  remove() {
+    return ' ';
+  }
 }
