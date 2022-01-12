@@ -25,4 +25,9 @@ export class WalletService {
   async findOneById(address: string): Promise<Wallet> {
     return await this.walletRepository.findOneOrFail(address);
   }
+
+  async remove(address: string): Promise<Wallet> {
+    const wallet = await this.findOneById(address);
+    return await this.walletRepository.remove(wallet);
+  }
 }
