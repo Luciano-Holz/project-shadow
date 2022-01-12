@@ -31,12 +31,14 @@ export class WalletController {
   }
 
   @ApiOkResponse({ type: Wallet })
+  @ApiNotFoundResponse()
   @Get(':address')
   findOne(@Param() address: string) {
     return this.walletService.findOneById(address);
   }
 
   @ApiOkResponse({ type: Wallet })
+  @ApiNotFoundResponse()
   @Put(':address')
   update(
     @Param() address: string,
