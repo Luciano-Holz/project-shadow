@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  Unique,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 @Unique(['cpf'])
@@ -18,4 +25,10 @@ export class Wallet {
   @Column({ nullable: false, type: 'varchar', length: 10 })
   @ApiProperty()
   birthdate: string;
+
+  @CreateDateColumn({ select: false })
+  data_criacao: Date;
+
+  @UpdateDateColumn({ select: false })
+  data_atualizacao: Date;
 }
