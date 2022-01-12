@@ -11,7 +11,7 @@ import {
 @Entity()
 @Unique(['cpf'])
 export class Wallet {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   address: number;
 
   @Column({ nullable: false, type: 'varchar', length: 100 })
